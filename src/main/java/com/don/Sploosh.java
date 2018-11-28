@@ -1,93 +1,86 @@
 package com.don;
-
+import main.java.com.don.Die;
 import java.util.*;
 
-/**
- * Hello world!
- */
 public class Sploosh {
-    static Random rand = new Random();
+
+    static int [] diceArray = {4,8,12,12,12,10,20,20,20};
+    List<Integer> rolls = new ArrayList<Integer>();
+    List<Die> dice = new ArrayList<Die>();
+    List<Integer> outcomes = new ArrayList<Integer>();
+    List<Integer> outcomes2 = new ArrayList<Integer>();
+
+    private static final int ITERATIONS = 10000000;
 
     public static void main(String[] args) {
-        Map<Integer, Integer> dice = new HashMap<>();
-        dice.put(4, 1);
-        dice.put(8, 1);
-        dice.put(12, 3);
-        dice.put(10, 1);
-        dice.put(20, 3);
-
-      /*  List<Integer> rolls = genRolls(dice);
-        for (Integer result : rolls) {
-            System.out.println(result);
+        Sploosh sploosh = new Sploosh();
+        for (int sides: diceArray){
+            sploosh.addDie(new Die(sides));
         }
-        Map<Integer,Integer> outcomes = genOutcome(rolls);
-        for(Integer key: outcomes.keySet()){
-            System.out.println(outcomes.get(key) + " " + key + " of a kind");
-        }*/
+        int boats=0, quads = 0, splooshes = 0, allMatch = 0, seven = 0 , eight = 0, five = 0, six = 0, four = 0;
 
+        for(int i=0;i<ITERATIONS;i++){
+            sploosh.genRolls();
+            sploosh.getOutcomes();
 
-      //  AtomicInteger boats = new AtomicInteger(0);
-        //AtomicInteger quads = new AtomicInteger(0);
-        int boats=0;
-        int quads=0;
-        for(int i=0;i<1000000;i++){
-            List<Integer> rolls = genRolls(dice);
-       //     for (Integer result : rolls) {
-         //       System.out.println(result);
-         //   }
-         //   System.out.println("i is " + i);
-            Map<Integer,Integer> outcomes = genOutcome(rolls);
-
-            if (hasBoat(outcomes)) boats++;
-            if (hasQuads(outcomes)) quads++;
+            if (sploosh.hasBoat()) boats++;
+            if (sploosh.nMatch(4)) four++;
+            if (sploosh.hasQuads()) quads++;
+            if (sploosh.isSploosh()) splooshes++;
+            if (sploosh.allMatch()) allMatch++;
+            if (sploosh.nMatch(5)) five++;
+            if (sploosh.nMatch(6)) six++;
+            if (sploosh.nMatch(7)) seven++;
+            if (sploosh.nMatch(8)) eight++;
         }
-
-        /*IntStream.range(0,1000000).forEach( nbr -> {
-            List<Integer> rolls = genRolls(dice);
-            Map<Integer,Integer> outcomes = genOutcome(rolls);
-            if (hasBoat(outcomes)) boats.set(boats.getAndIncrement());
-            if (hasQuads(outcomes)) quads.set(quads.getAndIncrement());
-
-        });*/
-        /*if (hasBoat(outcomes)) System.out.println("Has boat");
-        if (hasQuads(outcomes)) System.out.println("Has quads");*/
-        System.out.println("Hello World! Boats: " + boats + " quads: " + quads);
+        System.out.println("Hello World! Boats: " + (double)boats/ITERATIONS + " quads: " + (double)quads/ITERATIONS +
+                " splooshes " + (double)splooshes/ITERATIONS + " allMatch count " + allMatch + " 4 match " + four +
+                " 5 match " + (double)five/ITERATIONS + " 6 match " + (double)six/ITERATIONS + " 7 match " + seven + " 8 match " + eight);
     }
-    private static List<Integer> genRolls(Map<Integer, Integer> dice) {
-        ArrayList rolls = new ArrayList();
-        Map<Integer, Integer> mydice = new HashMap<>(dice);
-        for (Integer die : mydice.keySet()) {
-            while (mydice.get(die) > 0) {
-                rolls.add(rand.nextInt(die)+1);
-                mydice.put(die, mydice.get(die)-1);
-            }
+    public void addDie(Die die){
+        dice.add(die);
+    }
+    public List<Integer> genRolls() {
+        rolls.clear();
+        for (Die die : dice) {
+            rolls.add(new Integer(die.roll()));
         }
         Collections.sort(rolls);
         return rolls;
     }
-    public static Map<Integer, Integer> genOutcome(List<Integer> rolls){
-        Map<Integer,Integer> matches = new HashMap<Integer,Integer>();
-        while (rolls.size()>1){
-            Integer roll = rolls.remove(0);
-            int count = 1;
-            while((rolls.size() > 0) && rolls.get(0).equals(roll)){
-                count++;
-                rolls.remove(0);
-            }
-            if (count > 1){
-                if(matches.containsKey(count)){
-                    matches.put(count, matches.get(count)+1);
-                } else {
-                    matches.put(count, 1);
-                }
-            }
+    public List<Integer> getOutcomes(){
+         outcomes.clear();
+        outcomes2.clear();
+         int prev = 0, count =1;
+         for(int roll: rolls){
+             if(roll == prev){
+                 count++;
+             } else {
+                 prev = roll;
+                 if (count > 1){
+                     outcomes.add(count);
+                     count = 1;
+                 }
+             }
+         }
+        if (count > 1) {
+            outcomes.add(count);
         }
-        return matches;
+        return outcomes;
     }
-    public static boolean hasBoat(Map<Integer,Integer>matches){
-        return matches.containsKey(2) && matches.containsKey(3);
+    public boolean hasBoat(){
+        return outcomes.contains(2) && outcomes.contains(3);
     }
-    public static boolean hasQuads(Map<Integer,Integer>matches){
-        return matches.containsKey(4);
+    public boolean hasQuads(){
+        return outcomes.contains(4);
+    }
+    public boolean isSploosh(){
+        return outcomes.size()==0;
+    }
+    public boolean allMatch(){
+        return outcomes.size()==1 && outcomes.get(0) == rolls.size();
+    }
+    public boolean nMatch(int n){
+        return rolls.size()>=n && outcomes.contains(n);
     }
 }
