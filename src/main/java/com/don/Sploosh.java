@@ -33,9 +33,29 @@ public class Sploosh {
             if (sploosh.nMatch(7)) seven++;
             if (sploosh.nMatch(8)) eight++;
         }
-        System.out.println("Hello World! Boats: " + (double)boats/ITERATIONS + " quads: " + (double)quads/ITERATIONS +
-                " splooshes " + (double)splooshes/ITERATIONS + " allMatch count " + allMatch + " 4 match " + four +
-                " 5 match " + (double)five/ITERATIONS + " 6 match " + (double)six/ITERATIONS + " 7 match " + seven + " 8 match " + eight);
+        String summary = String.format(
+                "Simulation results (%d iterations)%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%",
+                ITERATIONS,
+                "Boats", boats, (double) boats * 100 / ITERATIONS,
+                "Quads", quads, (double) quads * 100 / ITERATIONS,
+                "Splooshes", splooshes, (double) splooshes * 100 / ITERATIONS,
+                "All match", allMatch, (double) allMatch * 100 / ITERATIONS,
+                "4-match", four, (double) four * 100 / ITERATIONS,
+                "5-match", five, (double) five * 100 / ITERATIONS,
+                "6-match", six, (double) six * 100 / ITERATIONS,
+                "7-match", seven, (double) seven * 100 / ITERATIONS,
+                "8-match", eight, (double) eight * 100 / ITERATIONS
+        );
+        System.out.println(summary);
     }
     public void addDie(Die die){
         dice.add(die);
