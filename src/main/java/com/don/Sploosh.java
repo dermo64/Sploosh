@@ -35,25 +35,25 @@ public class Sploosh {
         }
         String summary = String.format(
                 "Simulation results (%d iterations)%n" +
-                        "  Boats:      %.6f%n" +
-                        "  Quads:      %.6f%n" +
-                        "  Splooshes:  %.6f%n" +
-                        "  All match:  %d%n" +
-                        "  4-match:    %d%n" +
-                        "  5-match:    %.6f%n" +
-                        "  6-match:    %.6f%n" +
-                        "  7-match:    %d%n" +
-                        "  8-match:    %d",
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%%n" +
+                        "  %-10s count=%8d, probability=%7.4f%%",
                 ITERATIONS,
-                (double) boats / ITERATIONS,
-                (double) quads / ITERATIONS,
-                (double) splooshes / ITERATIONS,
-                allMatch,
-                four,
-                (double) five / ITERATIONS,
-                (double) six / ITERATIONS,
-                seven,
-                eight
+                "Boats", boats, (double) boats * 100 / ITERATIONS,
+                "Quads", quads, (double) quads * 100 / ITERATIONS,
+                "Splooshes", splooshes, (double) splooshes * 100 / ITERATIONS,
+                "All match", allMatch, (double) allMatch * 100 / ITERATIONS,
+                "4-match", four, (double) four * 100 / ITERATIONS,
+                "5-match", five, (double) five * 100 / ITERATIONS,
+                "6-match", six, (double) six * 100 / ITERATIONS,
+                "7-match", seven, (double) seven * 100 / ITERATIONS,
+                "8-match", eight, (double) eight * 100 / ITERATIONS
         );
         System.out.println(summary);
     }
