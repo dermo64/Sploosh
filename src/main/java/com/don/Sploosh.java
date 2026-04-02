@@ -35,25 +35,25 @@ public class Sploosh {
         }
         String summary = String.format(
                 "Simulation results (%d iterations)%n" +
-                        "  %-10s count=%8d, rate=%.6f%n" +
-                        "  %-10s count=%8d, rate=%.6f%n" +
-                        "  %-10s count=%8d, rate=%.6f%n" +
-                        "  %-10s count=%8d, rate=%.6f%n" +
-                        "  %-10s count=%8d, rate=%.6f%n" +
-                        "  %-10s count=%8d, rate=%.6f%n" +
-                        "  %-10s count=%8d, rate=%.6f%n" +
-                        "  %-10s count=%8d, rate=%.6f%n" +
-                        "  %-10s count=%8d, rate=%.6f",
+                        "  Boats:      %.6f%n" +
+                        "  Quads:      %.6f%n" +
+                        "  Splooshes:  %.6f%n" +
+                        "  All match:  %d%n" +
+                        "  4-match:    %d%n" +
+                        "  5-match:    %.6f%n" +
+                        "  6-match:    %.6f%n" +
+                        "  7-match:    %d%n" +
+                        "  8-match:    %d",
                 ITERATIONS,
-                "Boats", boats, (double) boats / ITERATIONS,
-                "Quads", quads, (double) quads / ITERATIONS,
-                "Splooshes", splooshes, (double) splooshes / ITERATIONS,
-                "All match", allMatch, (double) allMatch / ITERATIONS,
-                "4-match", four, (double) four / ITERATIONS,
-                "5-match", five, (double) five / ITERATIONS,
-                "6-match", six, (double) six / ITERATIONS,
-                "7-match", seven, (double) seven / ITERATIONS,
-                "8-match", eight, (double) eight / ITERATIONS
+                (double) boats / ITERATIONS,
+                (double) quads / ITERATIONS,
+                (double) splooshes / ITERATIONS,
+                allMatch,
+                four,
+                (double) five / ITERATIONS,
+                (double) six / ITERATIONS,
+                seven,
+                eight
         );
         System.out.println(summary);
     }
