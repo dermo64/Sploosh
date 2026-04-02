@@ -33,9 +33,29 @@ public class Sploosh {
             if (sploosh.nMatch(7)) seven++;
             if (sploosh.nMatch(8)) eight++;
         }
-        System.out.println("Hello World! Boats: " + (double)boats/ITERATIONS + " quads: " + (double)quads/ITERATIONS +
-                " splooshes " + (double)splooshes/ITERATIONS + " allMatch count " + allMatch + " 4 match " + four +
-                " 5 match " + (double)five/ITERATIONS + " 6 match " + (double)six/ITERATIONS + " 7 match " + seven + " 8 match " + eight);
+        String summary = String.format(
+                "Simulation results (%d iterations)%n" +
+                        "  Boats:      %.6f%n" +
+                        "  Quads:      %.6f%n" +
+                        "  Splooshes:  %.6f%n" +
+                        "  All match:  %d%n" +
+                        "  4-match:    %d%n" +
+                        "  5-match:    %.6f%n" +
+                        "  6-match:    %.6f%n" +
+                        "  7-match:    %d%n" +
+                        "  8-match:    %d",
+                ITERATIONS,
+                (double) boats / ITERATIONS,
+                (double) quads / ITERATIONS,
+                (double) splooshes / ITERATIONS,
+                allMatch,
+                four,
+                (double) five / ITERATIONS,
+                (double) six / ITERATIONS,
+                seven,
+                eight
+        );
+        System.out.println(summary);
     }
     public void addDie(Die die){
         dice.add(die);
